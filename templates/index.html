@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scanroom — OCR Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">⌘</span>
+        <span class="brand-name">Scanroom</span>
+      </div>
+      <div class="stats" id="stats">
+        <div class="stat"><span class="stat-value" id="statTotal">0</span><span class="stat-label">scanned</span></div>
+        <div class="stat"><span class="stat-value" id="statChars">0</span><span class="stat-label">characters</span></div>
+        <div class="stat"><span class="stat-value" id="statConf">—</span><span class="stat-label">avg. confidence</span></div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel upload-panel">
+        <h1>Turn photos into text.</h1>
+        <p class="lede">Drop a photo of a page, receipt, sign, or note. Scanroom reads it and hands back a clean .txt and .pdf.</p>
+
+        <div id="dropzone" class="dropzone">
+          <input type="file" id="fileInput" accept=".png,.jpg,.jpeg,.bmp,.tiff,.tif,.webp" hidden />
+          <div class="dropzone-inner">
+            <div class="dropzone-glyph">＋</div>
+            <div class="dropzone-text">
+              <strong>Drop an image here</strong>
+              <span>or click to browse — PNG, JPG, TIFF, WEBP</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="uploadStatus" class="upload-status" hidden></div>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="list-header">
+          <h2>Scanned documents</h2>
+          <div class="filters">
+            <button class="filter-btn active" data-filter="">All</button>
+            <button class="filter-btn" data-filter="done">Done</button>
+            <button class="filter-btn" data-filter="failed">Failed</button>
+          </div>
+        </div>
+        <div id="docList" class="doc-list">
+          <div class="empty-state" id="emptyState">No documents yet. Upload a photo to get started.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="previewOverlay" class="overlay" hidden>
+    <div class="preview-modal">
+      <div class="preview-header">
+        <span id="previewTitle">Document</span>
+        <button id="previewClose" class="icon-btn" aria-label="Close">×</button>
+      </div>
+      <pre id="previewText" class="preview-text"></pre>
+      <div class="preview-actions">
+        <a id="downloadTxt" class="btn" download>Download .txt</a>
+        <a id="downloadPdf" class="btn btn-primary" download>Download .pdf</a>
+        <button id="deleteDoc" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

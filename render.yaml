@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ocr-dashboard
+    runtime: docker
+    plan: starter          # cheapest paid plan that supports persistent disks (free tier does not)
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OCR_UPLOAD_DIR
+        value: /app/storage/uploads
+      - key: OCR_OUTPUT_DIR
+        value: /app/storage/outputs
+      - key: OCR_DB_PATH
+        value: /app/storage/ocr.db
+    disk:
+      name: ocr-storage
+      mountPath: /app/storage
+      sizeGB: 1
