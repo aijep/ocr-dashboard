@@ -6,15 +6,22 @@ Isolated in its own module so the engine can be swapped later (e.g. for a
 cloud vision API) without touching the rest of the app.
 """
 import logging
+import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
 
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 from PIL import Image, ImageOps, UnidentifiedImageError
 
 from app.config import TESSERACT_LANG
+
+# On Windows, Tesseract usually isn't on PATH, so point at the default install
+# location. On Linux (e.g. the Render/Docker deployment), the Dockerfile installs
+# tesseract-ocr via apt-get and it's already on PATH, so this is skipped entirely.
+_WINDOWS_TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+if os.name == "nt" and os.path.exists(_WINDOWS_TESSERACT_PATH):
+    pytesseract.pytesseract.tesseract_cmd = _WINDOWS_TESSERACT_PATH
 
 logger = logging.getLogger("ocr_dashboard.ocr")
 
