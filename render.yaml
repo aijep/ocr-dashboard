@@ -11,7 +11,3 @@ services:
         value: /app/storage/outputs
       - key: OCR_DB_PATH
         value: /app/storage/ocr.db
-    disk:
-      name: ocr-storage
-      mountPath: /app/storage
-      sizeGB: 1     
